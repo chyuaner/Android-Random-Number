@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">數字抽籤</string>
+    <string name="menu_about">關於</string>
+    <string name="menu_exit">離開程式</string>
+    <string name="title_activity_main">數字抽籤</string>
+    <string name="lotted">已抽過的數字: </string>
+    <string name="lotted_clear">清空</string>
+    <string name="lotted_exhausted">抽完了</string>
+    <string name="lot_btn_start">開始抽籤</string>
+    <string name="lot_max_num">抽取範圍:  1～</string>
+    <string name="about_text">抽數字 v1.0 \n 作者: 元兒~ \n 網站: http://yuan817.blogspot.tw</string>
+
+</resources>

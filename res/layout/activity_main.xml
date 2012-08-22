@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/show_lotted"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/lotted" 
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+        <Button
+            android:id="@+id/clear_lotted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lotted_clear" />
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/lotted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lotted"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+	<View android:layout_width="match_parent" android:layout_height="2dip"  
+        android:background="#FF909090" android:layout_marginTop="10dip" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/show_lot_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lot_max_num"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageButton
+            android:id="@+id/lot_numMax_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_media_rew" />
+
+        <EditText
+            android:id="@+id/lot_numMax"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="10" />
+
+        <ImageButton
+            android:id="@+id/lot_numMax_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_media_ff" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/lot_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/lot_btn_start"
+        android:textSize="@dimen/lot_main_btn" />
+    
+    
+</LinearLayout>
