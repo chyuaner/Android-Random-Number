@@ -16,6 +16,20 @@
             android:text="@string/lotted" 
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
+        <TextView
+            android:id="@+id/show_lotted_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lotted_total"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/lotted_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
         <Button
             android:id="@+id/clear_lotted"
             android:layout_width="wrap_content"
@@ -25,7 +39,7 @@
     </LinearLayout>
 
     <HorizontalScrollView
-        android:id="@+id/horizontalScrollView1"
+        android:id="@+id/lotted_scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -68,7 +82,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="numberDecimal"
+            android:inputType="number"
+            android:maxLength="7"
             android:text="10" />
 
         <ImageButton
