@@ -2,10 +2,19 @@
  * 數字抽籤
  * FileName:	MainActivity.java
  *
- * 日期: 		2012.8.28
+ * 日期: 		2012.8.31
  * 作者: 		元兒～
- * Version: 	v1.1.2
+ * Version: 	v1.2
  * 更新資訊:
+ * ├─ v1.2 -2012.8.31
+ * │  └─ 重新設計橫向畫面
+ * │     ├─ 在res那邊增加layout-land專門為橫向螢幕設計的版面
+ * │     ├─ 使用HorizontalScrollView和ScrollView（新增）物件針對直像橫向捲動個別處理
+ * │     └─ 並修改printLottedNum()副程式輸出成符合直向橫向排版的樣子 
+ * ├─ v1.1.3 -2012.8.29
+ * │  └─ "關於"對話框
+ * │     ├─ 將res/values/strings.xml的"關於"資訊再拆解細分，並在本code裡更新對應
+ * │     └─ 增加顯示這支程式的Package和版本: 內容直接從AndroidManifest.xml取得
  * ├─ v1.1.2 -2012.8.28
  * │  ├─ 使用者透過按鈕微調+1-1: 將此動作獨立出addsub_lot_numMax()副程式
  * │  ├─ 使用者透過按鈕微調+1-1抽取範圍改用自行撰寫的addsubNum();處理（可判斷程式可處理的範圍）
@@ -39,6 +48,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.view.Menu;
@@ -122,6 +135,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	//建立介面物件
 	private TextView lotted_TextView,lotted_total_TextView;
 	private HorizontalScrollView lotted_scrollView;
+	private ScrollView lotted_scrollView_land;
 	private EditText lot_numMax;
 	private ImageButton lot_numMax_sub,lot_numMax_add;
 	private Button lot_main_button,lotted_clear_Button;
@@ -134,7 +148,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		lot_main_button.setOnClickListener(this);
 		lotted_TextView = (TextView)findViewById(R.id.lotted);
 		lotted_total_TextView = (TextView)findViewById(R.id.lotted_total);
-		lotted_scrollView = (HorizontalScrollView)findViewById(R.id.lotted_scrollView);
+		if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)	//如果螢幕轉向為直向
+			lotted_scrollView = (HorizontalScrollView)findViewById(R.id.lotted_scrollView);
+		else if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)	//如果螢幕轉向為橫向
+			lotted_scrollView_land = (ScrollView)findViewById(R.id.lotted_scrollView);
 		lotted_clear_Button = (Button)findViewById(R.id.clear_lotted);
 		lotted_clear_Button.setOnClickListener(this);
 		lot_numMax = (EditText)findViewById(R.id.lot_numMax);
@@ -226,22 +243,44 @@ public class MainActivity extends Activity implements OnClickListener {
 	
 	//將"已抽過數字"裡的狀態輸出到介面
 	public void printLottedNum(){
+		
+		if(getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+			
+		}
 		//輸出文字
 		String outputText = "";
 		for(int i=0;i<data.lotted_num_total;i++){
-			if(i>0) outputText += ", ";
+			if(i>0){
+				//如果螢幕轉向為直向
+				if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+					outputText += ", ";
+				//如果螢幕轉向為橫向
+				else if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+					outputText += "\n";
+			}
 			outputText += data.lotted_num[i];
 		}
 		lotted_TextView.setText(outputText);
 		
-		//將lotted_scrollView自動捲到最右邊
-		//lotted_scrollView.scrollTo(lotted_TextView.getMeasuredWidth(), 0);
-		lotted_scrollView.post(new Runnable() {
-			@Override
-			public void run() {
-				lotted_scrollView.fullScroll(lotted_scrollView.FOCUS_RIGHT); 
-			}
-		});
+		if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+			//將lotted_scrollView自動捲到最右邊
+			//lotted_scrollView.scrollTo(lotted_TextView.getMeasuredWidth(), 0);
+			lotted_scrollView.post(new Runnable() {
+				@Override
+				public void run() {
+					lotted_scrollView.fullScroll(lotted_scrollView.FOCUS_RIGHT); 
+				}
+			});
+		}
+		else if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+			//將lotted_scrollView自動捲到最底下
+			lotted_scrollView_land.post(new Runnable() {
+				@Override
+				public void run() {
+					lotted_scrollView_land.fullScroll(lotted_scrollView_land.FOCUS_DOWN);
+				}
+			});
+		}
 	}
 	
 	@Override
@@ -255,11 +294,28 @@ public class MainActivity extends Activity implements OnClickListener {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		// TODO Auto-generated method stub
 		switch(item.getItemId()){
+		//"關於"按鈕
 		case R.id.menu_about:
+			//顯示"關於"資訊的對話框
 			AlertDialog about_AlertDialog = new AlertDialog.Builder(this)
 			.create();
 			about_AlertDialog.setTitle(R.string.menu_about);
-			about_AlertDialog.setMessage(getString(R.string.about_text));
+			try {
+				/*PackageManager package_manager = this.getPackageManager();
+				PackageInfo package_info = package_manager.getPackageInfo(this.getPackageName(), 0);*/
+				PackageInfo package_info = getPackageManager().getPackageInfo(this.getPackageName(), 0);
+				
+				about_AlertDialog.setMessage(
+						getString(R.string.app_name) + "\n"
+						+ getString(R.string.package_name) + package_info.packageName + "\n"
+						+ getString(R.string.version) + package_info.versionName + "\n"
+						+ getString(R.string.author) + getString(R.string.author_content) + "\n"
+						+ getString(R.string.author_website) + getString(R.string.author_website_content)
+				);
+			} catch (NameNotFoundException e) {
+				about_AlertDialog.setMessage(getString(R.string.getPackageInfo_error));
+				//e.printStackTrace();
+			}
 			about_AlertDialog.setButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -269,6 +325,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			});
 			about_AlertDialog.show();
 			break;
+		//"離開"按鈕
 		case R.id.menu_exit:
 			finish();
 			break;
