@@ -5,6 +5,7 @@
     <color name="lotted">#364DFF</color>
     <color name="show_lotted_total">#6600FF</color>
     <color name="lotted_total">#6600FF</color>
+    <color name="lot_max">#FF9900</color>
     <color name="lot_btn">#006600</color>
     
 </resources>
