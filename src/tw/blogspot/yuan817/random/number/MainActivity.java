@@ -2,10 +2,14 @@
  * 數字抽籤
  * FileName:	MainActivity.java
  *
- * 日期: 		2012.8.31
+ * 日期: 		2012.9.3
  * 作者: 		元兒～
- * Version: 	v1.2
+ * Version: 	v2.0
  * 更新資訊:
+ * ├─ v2.0 -2012.9.3
+ * │  ├─ 大幅更改架構，將NumRand、獨立出來的LottedNum包成Package
+ * │  ├─ 將原本寫在本code裡紀錄以抽過數字的變數陣列獨立出成一個類別，並修改所有相關會用到此陣列成相對應的物件方法
+ * │  └─ 更改從網路抓下來的免費圖示（非商業性質）
  * ├─ v1.3.1 -2012.9.3
  * │  └─ 由res/values/color.xml定義版面顏色
  * ├─ v1.2.1 -2012.9.2
@@ -42,6 +46,9 @@
  */
 package tw.blogspot.yuan817.random.number;
 
+import game.rand.num.LottedNum;
+import game.rand.num.NumRand;
+
 import java.text.BreakIterator;
 import java.util.concurrent.ExecutionException;
 
@@ -72,10 +79,9 @@ import android.widget.Toast;
 
 class Data{
 	public static final int LOTTY_AMOUNT = 1000000; //設定能抽的數字範圍
-	public static int[] lotted_num = new int[LOTTY_AMOUNT];;
-	public static int lotted_num_total = 0;
+	public static LottedNum lottedNum = new LottedNum(LOTTY_AMOUNT);
 	public static boolean lotting = false;
-	public static Num_rand num_rand = new Num_rand(LOTTY_AMOUNT);
+	public static NumRand numRand = new NumRand(LOTTY_AMOUNT);
 }
 
 
@@ -109,23 +115,19 @@ public class MainActivity extends Activity implements OnClickListener {
 		lot_numMax_add = (ImageButton)findViewById(R.id.lot_numMax_add);
 		lot_numMax_add.setOnClickListener(this);
 		printLottedStatus();
-		//printLottedNum();
 	}
 	
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
   	switch(v.getId()){
   	case R.id.lot_btn:
   		//lotting = true;
   		randoming();
   		break;
   	case R.id.clear_lotted:
-  		data.num_rand.shuffle();
-  		data.lotted_num_total = 0;
+  		data.numRand.shuffle();
+  		data.lottedNum.clear();
   		printLottedStatus();
-  		//printLottedNum();
-  		//lot_main_button.setText(getResources().getText(R.string.lot_btn_start));
   		break;
   	case R.id.lot_numMax_sub:
   		addsub_lot_numMax(-1);
@@ -155,23 +157,21 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void randoming(){
 		try{
 			//設定並判斷使用者輸入的抽籤最大值
-			if(data.num_rand.setNumAmount(
+			if(data.numRand.setNumAmount(
 					Integer.parseInt(lot_numMax.getText().toString()), false)
 					&& Integer.parseInt(lot_numMax.getText().toString()) != 0)
 			{
 				
 				//建立抽到的數字變數getNum，並隨機抽取一個數字
-				int getNum = data.num_rand.getNumber(
+				int getNum = data.numRand.getNumber(
 						Integer.parseInt(lot_numMax.getText().toString()), true);
 				if(getNum != -1){	//若正常抽到數字的話
 					getNum++;
-					//lot_main_button.setText(""+getNum);
-					data.lotted_num[data.lotted_num_total] = getNum;
-					data.lotted_num_total++;
+					data.lottedNum.addNum(getNum);
 					printLottedStatus();	//輸出到介面
 				}
 				else{	//如果數子已經抽完的話
-					lot_main_button.setText(getResources().getText(R.string.lotted_exhausted));
+					Toast.makeText(this, getResources().getText(R.string.lotted_exhausted), Toast.LENGTH_LONG).show();
 				}
 			}
 			else	//如果使用者輸入的範圍錯誤的話
@@ -185,20 +185,16 @@ public class MainActivity extends Activity implements OnClickListener {
 	//將主要變數裡的狀態輸出到介面
 	private void printLottedStatus() {
 		printLottedNum();
-		lotted_total_TextView.setText(""+data.lotted_num_total);
-		if(data.lotted_num_total == 0) lot_main_button.setText(getResources().getText(R.string.lot_btn_start));
-		else lot_main_button.setText(""+data.lotted_num[data.lotted_num_total-1]);
+		lotted_total_TextView.setText(""+data.lottedNum.getTotal());
+		if(data.lottedNum.cleared()) lot_main_button.setText(getResources().getText(R.string.lot_btn_start));
+		else lot_main_button.setText(""+data.lottedNum.getLastNum());
 	}
 	
 	//將"已抽過數字"裡的狀態輸出到介面
 	public void printLottedNum(){
-		
-		if(getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
-			
-		}
 		//輸出文字
 		String outputText = "";
-		for(int i=0;i<data.lotted_num_total;i++){
+		for(int i=0;i<data.lottedNum.getTotal();i++){
 			if(i>0){
 				//如果螢幕轉向為直向
 				if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
@@ -207,7 +203,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				else if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
 					outputText += "\n";
 			}
-			outputText += data.lotted_num[i];
+			outputText += data.lottedNum.getNum(i);
 		}
 		lotted_TextView.setText(outputText);
 		
@@ -241,7 +237,6 @@ public class MainActivity extends Activity implements OnClickListener {
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		// TODO Auto-generated method stub
 		switch(item.getItemId()){
 		//"關於"按鈕
 		case R.id.menu_about:
