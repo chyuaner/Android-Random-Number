@@ -3,8 +3,10 @@
  *
  * 日期:  		2012.9.4
  * 作者:			元兒～
- * Version:     v2.1
+ * Version:     v2.1.1
  * 更新資訊: 
+ * ├─ v2.1.1 -2012.9.4
+ * │  └─ 新增changeNum()可交換兩索引間的數字
  * ├─ v2.1 -2012.9.4
  * │  ├─ 新增updateNum()、insertNum()、deleteNum()、updateLastNum()、deleteLastNum()，可透過此函數更改、插入、刪除其中一個項目
  * │  ├─ 更新註解說明
@@ -104,6 +106,17 @@ public class NumList {
 			return true;	//回傳新增項目正常
 		}
 		else return false;	//回傳新增項目失敗
+	}
+	
+	//交換兩個數字
+	public boolean changeNum(int index1,int index2) {
+		if((index1>=0 && index2>=0) && (index1<numTotal && index2<numTotal)){
+			int tmpNum = numList[index1];
+			numList[index1] = numList[index2];
+			numList[index2] = tmpNum;
+			return true;	//回傳交換成功
+		}
+		else return false;	//回傳交換失敗
 	}
 	
 	//更改最後的數字
