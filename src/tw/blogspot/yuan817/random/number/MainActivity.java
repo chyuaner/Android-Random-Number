@@ -2,10 +2,12 @@
  * 數字抽籤
  * FileName:	MainActivity.java
  *
- * 日期: 		2012.9.3
+ * 日期: 		2012.9.4
  * 作者: 		元兒～
- * Version: 	v2.0
+ * Version: 	v2.1
  * 更新資訊:
+ * ├─ v2.1 -2012.9.4
+ * │  └─ 修改類別名稱LottedNum→NumList ，為了方便達到多用途（數字清單），將整體名稱更改
  * ├─ v2.0 -2012.9.3
  * │  ├─ 大幅更改架構，將NumRand、獨立出來的LottedNum包成Package
  * │  ├─ 將原本寫在本code裡紀錄以抽過數字的變數陣列獨立出成一個類別，並修改所有相關會用到此陣列成相對應的物件方法
@@ -46,7 +48,7 @@
  */
 package tw.blogspot.yuan817.random.number;
 
-import game.rand.num.LottedNum;
+import game.rand.num.NumList;
 import game.rand.num.NumRand;
 
 import java.text.BreakIterator;
@@ -79,7 +81,7 @@ import android.widget.Toast;
 
 class Data{
 	public static final int LOTTY_AMOUNT = 1000000; //設定能抽的數字範圍
-	public static LottedNum lottedNum = new LottedNum(LOTTY_AMOUNT);
+	public static NumList lottedNum = new NumList(LOTTY_AMOUNT);
 	public static boolean lotting = false;
 	public static NumRand numRand = new NumRand(LOTTY_AMOUNT);
 }
@@ -203,7 +205,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				else if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
 					outputText += "\n";
 			}
-			outputText += data.lottedNum.getNum(i);
+			outputText += data.lottedNum.getOneNum(i);
 		}
 		lotted_TextView.setText(outputText);
 		
