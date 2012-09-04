@@ -2,10 +2,12 @@
  * 數字抽籤
  * FileName:	MainActivity.java
  *
- * 日期: 		2012.9.4
+ * 日期: 		2012.9.5
  * 作者: 		元兒～
- * Version: 	v2.1
+ * Version: 	v2.2
  * 更新資訊:
+ * ├─ v2.2 -2012.9.5
+ * │  └─ 選單新增"管理已抽過數字"選單動作
  * ├─ v2.1 -2012.9.4
  * │  └─ 修改類別名稱LottedNum→NumList ，為了方便達到多用途（數字清單），將整體名稱更改
  * ├─ v2.0 -2012.9.3
@@ -41,8 +43,6 @@
  * 目前Bug: 
  * └─ v1.0.a1 -2012.8.22
  *    └─ 螢幕轉向後重設的問題解決到一半
- * 預計打算:
- * └─ 建立多國語言（英文、繁體中文）
  * 
  * Description: 介面上有個大按鈕，按下去將會隨機取出範圍內的數字，且不再重複抽到
  */
@@ -61,6 +61,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -147,6 +148,14 @@ public class MainActivity extends Activity implements OnClickListener {
 			Toast.makeText(this, getResources().getString(R.string.lot_numMax_addsub_error), Toast.LENGTH_SHORT).show();
 		}
 	}
+	
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		printLottedStatus();
+	}
+
 	//在範圍內微調目前的數字（像是+1-1的）（參數: 目前數,最小值,最大值,微調數）
 	//註: 最大值和最小值本身也包含進去
 	public double addsubNum(double currentNum,double min,double max,double change){
@@ -240,6 +249,11 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch(item.getItemId()){
+		//"管理已抽過的數字"按鈕
+		case R.id.menu_toLottedList:
+			Intent toLottedList = new Intent(this,LottedList.class);
+			startActivity(toLottedList);
+			break;
 		//"關於"按鈕
 		case R.id.menu_about:
 			//顯示"關於"資訊的對話框
@@ -273,7 +287,8 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		//"離開"按鈕
 		case R.id.menu_exit:
-			finish();
+			System.exit(0);
+			//finish();
 			break;
 		}
 		return super.onMenuItemSelected(featureId, item);

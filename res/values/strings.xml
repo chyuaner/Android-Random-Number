@@ -8,6 +8,7 @@
     <string name="author_website">Author Website: </string>
     <string name="author_website_content">http://yuan817.blogspot.tw</string>
     <string name="getPackageInfo_error">GetPackageInfo Error</string>
+    <string name="menu_toLottedList">Manager Lotted List</string>
     <string name="menu_about">About</string>
     <string name="menu_exit">Exit</string>
     <string name="title_activity_main">Number Ballot</string>
@@ -19,5 +20,6 @@
     <string name="lot_max_num">Range:  1～</string>
     <string name="lot_numMax_addsub_error">Error</string>
     <string name="lot_max_num_error">Range Error...</string>
+    <string name="title_lotted_list">Manager Lotted List</string>
 
 </resources>

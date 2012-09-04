@@ -8,6 +8,7 @@
     <string name="author_website">作者網站: </string>
     <string name="author_website_content">http://yuan817.blogspot.tw</string>
     <string name="getPackageInfo_error">應用程式基本資訊取得錯誤</string>
+    <string name="menu_toLottedList">管理已抽過的數字清單</string>
     <string name="menu_about">關於</string>
     <string name="menu_exit">離開程式</string>
     <string name="title_activity_main">數字抽籤</string>
@@ -19,5 +20,6 @@
     <string name="lot_max_num">抽取範圍:  1～</string>
     <string name="lot_numMax_addsub_error">微調錯誤喔～</string>
     <string name="lot_max_num_error">範圍設定錯誤喔...</string>
+    <string name="title_lotted_list">管理已抽過的數字清單</string>
 
 </resources>
