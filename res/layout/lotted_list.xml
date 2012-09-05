@@ -19,6 +19,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/lotted_list_menuPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -33,12 +34,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_delete" />
-
-        <ImageButton
-            android:id="@+id/lotted_list_reload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_popup_sync" />
 
         <ImageButton
             android:id="@+id/lotted_list_back"

@@ -14,14 +14,14 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" 
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustResize" android:theme="@style/activity_main_Theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="LottedList" android:label="@string/title_lotted_list"></activity>
+        <activity android:name="LottedList" android:label="@string/title_lotted_list" android:theme="@style/lotted_list_Theme"></activity>
     </application>
 
 </manifest>

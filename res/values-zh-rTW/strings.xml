@@ -20,6 +20,6 @@
     <string name="lot_max_num">抽取範圍:  1～</string>
     <string name="lot_numMax_addsub_error">微調錯誤喔～</string>
     <string name="lot_max_num_error">範圍設定錯誤喔...</string>
-    <string name="title_lotted_list">管理已抽過的數字清單</string>
+    <string name="title_lotted_list">已抽過的數</string>
 
 </resources>
