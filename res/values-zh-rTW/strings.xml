@@ -21,5 +21,10 @@
     <string name="lot_numMax_addsub_error">微調錯誤喔～</string>
     <string name="lot_max_num_error">範圍設定錯誤喔...</string>
     <string name="title_lotted_list">已抽過的數</string>
+    <string name="lotted_list_item_title_addItem">新增一個項目</string>
+    <string name="lotted_list_item_title_updateItem">修改此項目</string>
+    <string name="lotted_list_item_id">索引: </string>
+    <string name="lotted_list_item_num">數字: </string>
+    <string name="lotted_list_item_repeatNumError">你設定的數字重複到了!! </string>
 
 </resources>

@@ -6,6 +6,8 @@
  * Version:     v1.1
  * 更新資訊: 
  * ├─ v1.1
+ * │  ├─ 新增getUsedNum(num) 取得這個數是否已被用過
+ * ├─ v1.1
  * │  ├─ 新增setNumAmount(num_amount,clear)、setUsedNum(num,tf)
  * │  └─ 修改getNumber(max,setNumUse)，抽出數字時自動檢查所有範圍內的數字是否已被抽完（解決無窮迴圈的問題）
  * └─ v1.0 -2012.8.22
@@ -64,6 +66,10 @@ public class NumRand {
 			return i;
 		}
 		else return -1; //若輸入的最大值超過能處理的最大值時，回傳-1
+	}
+	//取得這個數是否已被用過
+	public boolean getUsedNum(int num){
+		return num_use[num];
 	}
 	//手動設定這個數是否已被抽過
 	public void setUsedNum(int num,boolean tf){
