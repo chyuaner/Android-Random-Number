@@ -4,7 +4,7 @@
     android:versionName="2.2" >
 
     <uses-sdk
-        android:minSdkVersion="4"
+        android:minSdkVersion="7"
         android:targetSdkVersion="15" />
 
     <application
@@ -14,7 +14,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" 
-            >
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
