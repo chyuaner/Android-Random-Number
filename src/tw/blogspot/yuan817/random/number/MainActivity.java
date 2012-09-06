@@ -4,8 +4,10 @@
  *
  * 日期: 		2012.9.7
  * 作者: 		元兒～
- * Version: 	v2.1.1
+ * Version: 	v2.1.2
  * 更新資訊:
+ * ├─ v2.1.2 -2012.9.7
+ * │  └─ 將Data專門暫存資料的類別移出成獨立的Data.java檔
  * ├─ v2.1.1 -2012.9.7
  * │  ├─ 將所有"getResources().getText(Rid)"都替換成"getString(Rid)"
  * │  └─ 修改所有有用到try、catch的成會詳細判斷，並新增"內部錯誤"的例外狀況
@@ -81,14 +83,6 @@ import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-class Data{
-	public static final int LOTTY_AMOUNT = 1000000; //設定能抽的數字範圍
-	public static NumList lottedNum = new NumList(LOTTY_AMOUNT);
-	public static boolean lotting = false;
-	public static NumRand numRand = new NumRand(LOTTY_AMOUNT);
-}
-
 
 public class MainActivity extends Activity implements OnClickListener {
 	private Data data = new Data();
