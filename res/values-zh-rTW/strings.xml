@@ -19,5 +19,7 @@
     <string name="lot_max_num">抽取範圍:  1～</string>
     <string name="lot_numMax_addsub_error">微調錯誤喔～</string>
     <string name="lot_max_num_error">範圍設定錯誤喔...</string>
+    <string name="notNumber_error">這不是正確的數字喔～</string>
+    <string name="inside_process_error">內部錯誤</string>
 
 </resources>

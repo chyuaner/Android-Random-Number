@@ -19,5 +19,7 @@
     <string name="lot_max_num">Range:  1～</string>
     <string name="lot_numMax_addsub_error">Error</string>
     <string name="lot_max_num_error">Range Error...</string>
+    <string name="notNumber_error">This is not number.</string>
+    <string name="inside_process_error">Inside process error</string>
 
 </resources>

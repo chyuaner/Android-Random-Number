@@ -2,10 +2,13 @@
  * 數字抽籤
  * FileName:	MainActivity.java
  *
- * 日期: 		2012.9.4
+ * 日期: 		2012.9.7
  * 作者: 		元兒～
- * Version: 	v2.1
+ * Version: 	v2.1.1
  * 更新資訊:
+ * ├─ v2.1.1 -2012.9.7
+ * │  ├─ 將所有"getResources().getText(Rid)"都替換成"getString(Rid)"
+ * │  └─ 修改所有有用到try、catch的成會詳細判斷，並新增"內部錯誤"的例外狀況
  * ├─ v2.1 -2012.9.4
  * │  └─ 修改類別名稱LottedNum→NumList ，為了方便達到多用途（數字清單），將整體名稱更改
  * ├─ v2.0 -2012.9.3
@@ -143,8 +146,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		try {
 			lot_numMax.setText(""+
 	  				(int) addsubNum(Double.parseDouble(lot_numMax.getText().toString()), 1, data.LOTTY_AMOUNT, chg) );
-		} catch (Exception e) {
-			Toast.makeText(this, getResources().getString(R.string.lot_numMax_addsub_error), Toast.LENGTH_SHORT).show();
+		} catch (IllegalArgumentException ex) {
+			Toast.makeText(this, getString(R.string.notNumber_error), Toast.LENGTH_SHORT).show();
+		} catch(Exception ex){
+			Toast.makeText(this, getString(R.string.inside_process_error), Toast.LENGTH_LONG).show();
 		}
 	}
 	//在範圍內微調目前的數字（像是+1-1的）（參數: 目前數,最小值,最大值,微調數）
@@ -173,14 +178,17 @@ public class MainActivity extends Activity implements OnClickListener {
 					printLottedStatus();	//輸出到介面
 				}
 				else{	//如果數子已經抽完的話
-					Toast.makeText(this, getResources().getText(R.string.lotted_exhausted), Toast.LENGTH_LONG).show();
+					Toast.makeText(this, getString(R.string.lotted_exhausted), Toast.LENGTH_LONG).show();
 				}
 			}
 			else	//如果使用者輸入的範圍錯誤的話
-				throw new Exception("range error");
+				throw new IllegalArgumentException("range error");
+		}
+		catch (IllegalArgumentException ex) {
+			Toast.makeText(this, getString(R.string.lot_max_num_error), Toast.LENGTH_SHORT).show();
 		}
 		catch(Exception ex){
-			Toast.makeText(this, getResources().getString(R.string.lot_max_num_error), Toast.LENGTH_LONG).show();
+			Toast.makeText(this, getString(R.string.inside_process_error), Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -188,7 +196,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	private void printLottedStatus() {
 		printLottedNum();
 		lotted_total_TextView.setText(""+data.lottedNum.getTotal());
-		if(data.lottedNum.cleared()) lot_main_button.setText(getResources().getText(R.string.lot_btn_start));
+		if(data.lottedNum.cleared()) lot_main_button.setText(getString(R.string.lot_btn_start));
 		else lot_main_button.setText(""+data.lottedNum.getLastNum());
 	}
 	
@@ -258,9 +266,11 @@ public class MainActivity extends Activity implements OnClickListener {
 						+ getString(R.string.author) + getString(R.string.author_content) + "\n"
 						+ getString(R.string.author_website) + getString(R.string.author_website_content)
 				);
-			} catch (NameNotFoundException e) {
+			} catch (NameNotFoundException ex) {
 				about_AlertDialog.setMessage(getString(R.string.getPackageInfo_error));
 				//e.printStackTrace();
+			} catch(Exception ex){
+				Toast.makeText(this, getString(R.string.inside_process_error), Toast.LENGTH_LONG).show();
 			}
 			about_AlertDialog.setButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 				@Override
