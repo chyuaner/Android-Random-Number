@@ -25,6 +25,11 @@
     <string name="lotted_list_item_title_updateItem">Update Item</string>
     <string name="lotted_list_item_id">ID: </string>
     <string name="lotted_list_item_num">Number: </string>
-    <string name="lotted_list_item_repeatNumError">Number is repeated!! </string>
+    <string name="lotted_list_item_repeatNum_error">Number is repeated!!</string>
+    <string name="lotted_list_item_id_out_of_total_error">ID is out of list index</string>
+    <string name="lotted_list_out_of_process_array">Out of process array</string>
+    <string name="notNumber_error">This is not number.</string>
+    <string name="inside_process_error">Inside process error</string>
+    
 
 </resources>

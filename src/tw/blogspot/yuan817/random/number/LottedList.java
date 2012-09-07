@@ -2,10 +2,18 @@
  * 數字抽籤
  * FileName:	LottedList.java
  *
- * 日期: 		2012.9.6
+ * 日期: 		2012.9.7
  * 作者: 		元兒～
- * Version: 	v1.0.3
+ * Version: 	v1.0.4
  * 更新資訊:
+ * ├─ v1.0.4 -2012.9.7
+ * │  ├─ 加入InputItemDialog加入按鈕被按下的防呆判斷
+ * │  │  ├─ 當使用者新增的超出可處理的數列陣列範圍
+ * │  │  ├─ 當使用者新增的id超過已抽過數字的最大索引值 
+ * │  │  ├─ 當使用者輸入的數不在可抽數字的範圍內
+ * │  │  ├─ 當使用者輸入的數是否已被用過
+ * │  │  └─ 使用者輸入的數不是正確的數字（非整數）
+ * │  └─ 加入num_input.requestFocus();	//將預設焦點擺在輸入num上
  * ├─ v1.0.3 -2012.9.6
  * │  ├─ 建立InputItemDialog對話框類別、物件，並完成新增、編輯之動作
  * │  ├─ 小幅更改"在標題顯示已抽過數字總計"顯示格式成" xx | n "→" xx  (n) "
@@ -277,31 +285,62 @@ public class LottedList extends Activity implements OnClickListener{
 				num_input.setText(""+data.lottedNum.getOneNum(ID));
 				break;
 			}
+			num_input.requestFocus();	//將預設焦點擺在輸入num上
 		}
 
+		//當Dialog裡的按鈕被按下時
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch(v.getId()){
 			case R.id.lotted_list_inputItemDialog_ok:
-				int thisId = Integer.parseInt(id_input.getText().toString()) ,thisNum = Integer.parseInt(num_input.getText().toString());
-				
-				if(!Data.numRand.getUsedNum(thisNum-1)){	//檢查使用者輸入的數是否已被用過
-					switch(FUNCTION){
-					case 1:
-						data.numRand.setUsedNum(thisNum-1, true);
-						data.lottedNum.insertNum(thisId, thisNum);
-						break;
-					case 2:
-						data.numRand.setUsedNum(data.lottedNum.getOneNum(ID)-1, false);
-						data.numRand.setUsedNum(thisNum-1, true);
-						data.lottedNum.updateNum(thisId, thisNum);
-						break;
+				try{
+					int thisId = Integer.parseInt(id_input.getText().toString()) ,thisNum = Integer.parseInt(num_input.getText().toString());
+					
+					//當使用者新增的超出可處理的數列陣列範圍
+					if(data.lottedNum.getTotal() >= LOTTED_AMOUNT){
+						throw new ArrayIndexOutOfBoundsException();
 					}
-					LottedList.this.displayLottedNumItem();
-					dismiss();
+					//當使用者新增的id超過已抽過數字的最大索引值
+					else if(thisId > data.lottedNum.getTotal()){
+						Toast.makeText(getContext(), R.string.lotted_list_item_id_out_of_total_error, Toast.LENGTH_SHORT).show();
+					}
+					//當使用者輸入的數不在可抽數字的範圍內
+					else if(thisNum <= 0 || thisNum >= data.LOTTY_AMOUNT){
+						Toast.makeText(getContext(), R.string.lot_max_num_error, Toast.LENGTH_SHORT).show();
+					}
+					//當使用者輸入的數是否已被用過
+					else if(Data.numRand.getUsedNum(thisNum-1)){
+						Toast.makeText(getContext(), R.string.lotted_list_item_repeatNum_error, Toast.LENGTH_SHORT).show();
+					}
+					else{
+						switch(FUNCTION){
+						case 1:
+							data.numRand.setUsedNum(thisNum-1, true);
+							data.lottedNum.insertNum(thisId, thisNum);
+							break;
+						case 2:
+							data.numRand.setUsedNum(data.lottedNum.getOneNum(ID)-1, false);
+							data.numRand.setUsedNum(thisNum-1, true);
+							data.lottedNum.updateNum(thisId, thisNum);
+							break;
+						}
+						LottedList.this.displayLottedNumItem();
+						dismiss();
+					}
 				}
-				else Toast.makeText(getContext(), R.string.lotted_list_item_repeatNumError, Toast.LENGTH_SHORT).show();
+				//當使用者新增的超出可處理的數列陣列範圍
+				catch(ArrayIndexOutOfBoundsException ex){
+					Toast.makeText(getContext(), R.string.lotted_list_out_of_process_array, Toast.LENGTH_LONG).show();
+				}
+				//使用者輸入的數不是正確的數字（非整數）
+				catch(IllegalArgumentException ex){
+					Toast.makeText(getContext(), R.string.notNumber_error, Toast.LENGTH_SHORT).show();
+				}
+				//其他例外
+				catch(Exception ex){
+					Toast.makeText(getContext(), R.string.inside_process_error, Toast.LENGTH_LONG).show();
+				}
 				break;
 			case R.id.lotted_list_inputItemDialog_cancel:
 				dismiss();

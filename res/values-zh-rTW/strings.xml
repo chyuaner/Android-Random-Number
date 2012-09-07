@@ -25,6 +25,11 @@
     <string name="lotted_list_item_title_updateItem">修改此項目</string>
     <string name="lotted_list_item_id">索引: </string>
     <string name="lotted_list_item_num">數字: </string>
-    <string name="lotted_list_item_repeatNumError">你設定的數字重複到了!! </string>
+    <string name="lotted_list_item_repeatNum_error">你設定的數字重複到了!! </string>
+    <string name="lotted_list_item_id_out_of_total_error">索引值不能超出現有已抽過的數的總數</string>
+    <string name="lotted_list_out_of_process_array">已超出可處理的量</string>
+    <string name="notNumber_error">這不是正確的數字喔～</string>
+    <string name="inside_process_error">內部錯誤</string>
+
 
 </resources>
