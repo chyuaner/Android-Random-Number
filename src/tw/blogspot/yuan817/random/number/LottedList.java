@@ -2,13 +2,15 @@
  * 數字抽籤
  * FileName:	LottedList.java
  *
- * 日期: 		2012.9.8
+ * 日期: 		2012.9.9
  * 作者: 		元兒～
- * Version: 	v1.0.5
+ * Version: 	v1.0.6
  * 更新資訊:
+ * ├─ v1.0.6 -2012.9.9
+ * │  └─ 設定lotted_list_TextView[]設定文字色彩
  * ├─ v1.0.5 -2012.9.8
  * │  └─ 使用setLayoutParams修正lotted_list_TableRow[]內按鈕大小不一致的問題（Android4.0無此問題）
- *       	例：lotted_list_edit[i].setLayoutParams(new TableRow.LayoutParams(80, 80));
+ * │     	例：lotted_list_edit[i].setLayoutParams(new TableRow.LayoutParams(80, 80));
  * ├─ v1.0.5 -2012.9.8
  * │  └─ 修正之前lotted_list_id_TextView[]、lotted_list_TextView[]寫死文字寬度成使用Gravity，可根據直像橫向、不同尺寸螢幕自動調整
  * ├─ v1.0.4 -2012.9.7
@@ -233,6 +235,7 @@ public class LottedList extends Activity implements OnClickListener{
 			lotted_list_TextView[i].setGravity(Gravity.CENTER);
 			//lotted_list_TextView[i].setWidth(100);
 			lotted_list_TextView[i].setTextAppearance(this, android.R.style.TextAppearance_Large);
+			lotted_list_TextView[i].setTextColor(getResources().getColor(R.color.lotted));
 			lotted_list_TableRow[i].addView(lotted_list_TextView[i]);
 			
 			lotted_list_up[i] = new Button(this);
