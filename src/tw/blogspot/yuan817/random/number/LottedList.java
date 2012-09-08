@@ -2,10 +2,13 @@
  * 數字抽籤
  * FileName:	LottedList.java
  *
- * 日期: 		2012.9.7
+ * 日期: 		2012.9.8
  * 作者: 		元兒～
- * Version: 	v1.0.4
+ * Version: 	v1.0.5
  * 更新資訊:
+ * ├─ v1.0.5 -2012.9.8
+ * │  └─ 使用setLayoutParams修正lotted_list_TableRow[]內按鈕大小不一致的問題（Android4.0無此問題）
+ *       	例：lotted_list_edit[i].setLayoutParams(new TableRow.LayoutParams(80, 80));
  * ├─ v1.0.5 -2012.9.8
  * │  └─ 修正之前lotted_list_id_TextView[]、lotted_list_TextView[]寫死文字寬度成使用Gravity，可根據直像橫向、不同尺寸螢幕自動調整
  * ├─ v1.0.4 -2012.9.7
@@ -30,7 +33,7 @@
  *    └─ 最初的版本
  * 目前Bug:
  * ├─ v1.0.5 -2012.9.8
- * │  └─ 尚未修正針對Android 2.x手機的按鈕大小不一致的問題
+ * │  └─ v尚未修正針對Android 2.x手機的按鈕大小不一致的問題
  * ├─ v1.0.3 -2012.9.6
  * │  ├─ v尚未在新增、更改時加入判斷使用者輸入的id有無錯誤
  * │  ├─ v尚未在新增、更改時加入判斷使用者輸入的num是否超出可處理範圍
@@ -42,6 +45,10 @@
  *    └─ v尚未完成新增按鈕
  * 
  * Description: 可在這個頁面個別新增、移除已抽過的數字之清單
+ * 
+ * 參考資料：
+ * JWorld@TW Java論壇 - Re:[請問]動態增加ImageButton與size:
+ * 	http://www.javaworld.com.tw/jute/post/view?bid=26&id=239375&sty=3&age=-1&tpg=1&ppg=1#239375
  */
 package tw.blogspot.yuan817.random.number;
 
@@ -231,23 +238,29 @@ public class LottedList extends Activity implements OnClickListener{
 			lotted_list_up[i] = new Button(this);
 			lotted_list_up[i].setText("↑");
 			lotted_list_up[i].setId(i*10+1);
+			lotted_list_up[i].setLayoutParams(new TableRow.LayoutParams(50,80));
 			lotted_list_up[i].setOnClickListener(this);
 			lotted_list_TableRow[i].addView(lotted_list_up[i]);
 			
 			lotted_list_down[i] = new Button(this);
 			lotted_list_down[i].setText("↓");
 			lotted_list_down[i].setId(i*10+2);
+			lotted_list_down[i].setLayoutParams(new TableRow.LayoutParams(50,80));
 			lotted_list_down[i].setOnClickListener(this);
 			lotted_list_TableRow[i].addView(lotted_list_down[i]);
 			
 			lotted_list_edit[i] = new ImageButton(this);
 			lotted_list_edit[i].setImageResource(android.R.drawable.ic_menu_edit);
+			lotted_list_edit[i].setLayoutParams(new TableRow.LayoutParams(80, 80));
 			lotted_list_edit[i].setId(i*10+3);
 			lotted_list_edit[i].setOnClickListener(this);
 			lotted_list_TableRow[i].addView(lotted_list_edit[i]);
 			
 			lotted_list_delete[i] = new ImageButton(this);
 			lotted_list_delete[i].setImageResource(android.R.drawable.ic_delete);
+			lotted_list_delete[i].setLayoutParams(new TableRow.LayoutParams(80,80));
+			lotted_list_delete[i].setMaxWidth(50);
+			lotted_list_delete[i].setMaxHeight(50);
 			//lotted_list_delete[i].setGravity(Gravity.RIGHT);
 			lotted_list_delete[i].setId(i*10+4);
 			lotted_list_delete[i].setOnClickListener(this);
