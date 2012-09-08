@@ -13,7 +13,8 @@
         <TableLayout
             android:id="@+id/lotted_list_tableLayout"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="fill_parent"
+            android:stretchColumns="1" >
 
         </TableLayout>
     </ScrollView>

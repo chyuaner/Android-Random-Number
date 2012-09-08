@@ -6,6 +6,8 @@
  * 作者: 		元兒～
  * Version: 	v1.0.4
  * 更新資訊:
+ * ├─ v1.0.5 -2012.9.8
+ * │  └─ 修正之前lotted_list_id_TextView[]、lotted_list_TextView[]寫死文字寬度成使用Gravity，可根據直像橫向、不同尺寸螢幕自動調整
  * ├─ v1.0.4 -2012.9.7
  * │  ├─ 加入InputItemDialog加入按鈕被按下的防呆判斷
  * │  │  ├─ 當使用者新增的超出可處理的數列陣列範圍
@@ -27,14 +29,16 @@
  * └─ v1.0 -2012.9.5
  *    └─ 最初的版本
  * 目前Bug:
+ * ├─ v1.0.5 -2012.9.8
+ * │  └─ 尚未修正針對Android 2.x手機的按鈕大小不一致的問題
  * ├─ v1.0.3 -2012.9.6
- * │  ├─ 尚未在新增、更改時加入判斷使用者輸入的id有無錯誤
- * │  ├─ 尚未在新增、更改時加入判斷使用者輸入的num是否超出可處理範圍
- * │  └─ 尚未在新增時加入判斷是否超出可處理的清單量
+ * │  ├─ v尚未在新增、更改時加入判斷使用者輸入的id有無錯誤
+ * │  ├─ v尚未在新增、更改時加入判斷使用者輸入的num是否超出可處理範圍
+ * │  └─ v尚未在新增時加入判斷是否超出可處理的清單量
  * ├─ v1.0.1 -2012.9.5
  * │  └─ v雖然以完成個別、全部清除按鈕之動作，但新增、編輯尚未完成
  * └─ v1.0 -2012.9.5
- *    ├─ 表格排版尚未完成、表格按鈕、動作尚未建立
+ *    ├─ v表格排版尚未完成、表格按鈕、動作尚未建立
  *    └─ v尚未完成新增按鈕
  * 
  * Description: 可在這個頁面個別新增、移除已抽過的數字之清單
@@ -214,11 +218,13 @@ public class LottedList extends Activity implements OnClickListener{
 			lotted_list_id_TextView[i] = new TextView(this);
 			lotted_list_id_TextView[i].setText(""+i);
 			lotted_list_id_TextView[i].setWidth(40);
+			lotted_list_id_TextView[i].setGravity(Gravity.RIGHT);
 			lotted_list_TableRow[i].addView(lotted_list_id_TextView[i]);
 			
 			lotted_list_TextView[i] = new TextView(this);
 			lotted_list_TextView[i].setText(""+data.lottedNum.getOneNum(i));
-			lotted_list_TextView[i].setWidth(100);
+			lotted_list_TextView[i].setGravity(Gravity.CENTER);
+			//lotted_list_TextView[i].setWidth(100);
 			lotted_list_TextView[i].setTextAppearance(this, android.R.style.TextAppearance_Large);
 			lotted_list_TableRow[i].addView(lotted_list_TextView[i]);
 			
