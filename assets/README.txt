@@ -1,5 +1,5 @@
 感謝: 
-
+	XXX 提供日文翻譯
 
 來源：
 程式圖示: /drawable/target.png

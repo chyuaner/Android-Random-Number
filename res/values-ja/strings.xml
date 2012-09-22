@@ -1,0 +1,34 @@
+<resources>
+
+    <string name="app_name">數字抽籤</string>
+    <string name="package_name">套件名稱: </string>
+    <string name="version">版本: </string>
+    <string name="author">作者: </string>
+    <string name="author_content">元兒~</string>
+    <string name="author_website">作者網站: </string>
+    <string name="author_website_content">http://yuan817.blogspot.tw</string>
+    <string name="getPackageInfo_error">應用程式基本資訊取得錯誤</string>
+    <string name="menu_toLottedList">管理已抽過的數字清單</string>
+    <string name="menu_about">關於</string>
+    <string name="menu_exit">離開程式</string>
+    <string name="title_activity_main">數字抽籤</string>
+    <string name="lotted">已抽過的數字: </string>
+    <string name="lotted_total">總計: </string>
+    <string name="lotted_clear">清空</string>
+    <string name="lotted_exhausted">抽完了</string>
+    <string name="lot_btn_start">開始抽籤</string>
+    <string name="lot_max_num">抽取範圍:  1～</string>
+    <string name="lot_numMax_addsub_error">微調錯誤喔～</string>
+    <string name="lot_max_num_error">範圍設定錯誤喔...</string>
+    <string name="title_lotted_list">已抽過的數</string>
+    <string name="lotted_list_item_title_addItem">新增一個項目</string>
+    <string name="lotted_list_item_title_updateItem">修改此項目</string>
+    <string name="lotted_list_item_id">索引: </string>
+    <string name="lotted_list_item_num">數字: </string>
+    <string name="lotted_list_item_repeatNum_error">你設定的數字重複到了!! </string>
+    <string name="lotted_list_item_id_out_of_total_error">索引值不能超出現有已抽過的數的總數</string>
+    <string name="lotted_list_out_of_process_array">已超出可處理的量</string>
+    <string name="notNumber_error">這不是正確的數字喔～</string>
+    <string name="inside_process_error">內部錯誤</string>
+
+</resources>
