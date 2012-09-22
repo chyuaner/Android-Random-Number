@@ -2,9 +2,9 @@
  * 數字抽籤
  * FileName:	MainActivity.java
  *
- * 日期: 		2012.9.7
+ * 日期: 		2012.9.23
  * 作者: 		元兒～
- * Version: 	v2.2
+ * Version: 	v2.4 beta 1
  * 更新資訊:
  * ├─ v2.4 beta 1 -2012.9.22
  * │  ├─ 包上ScrollView讓對話框可以捲動
