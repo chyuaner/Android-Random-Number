@@ -1,3 +1,5 @@
+感謝: 
+
 圖示來源：
 
 target.png ← ic_launcher

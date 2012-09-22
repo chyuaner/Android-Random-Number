@@ -6,6 +6,11 @@
  * 作者: 		元兒～
  * Version: 	v2.2
  * 更新資訊:
+ * ├─ v2.4 Pre-alpha 1 -2012.9.22
+ * │  ├─ 修改AboutDialog分開成showAboutDialog副程式
+ * │  ├─ 將about_AlertDialog.setMessage改成自行設計的介面
+ * │  ├─ 設定成content_textView.setAutoLinkMask(Linkify.ALL)可由使用者點選上面的網址連結
+ * │  └─ 新增讀取/assets/README.txt文字檔內容到about_AlertDialog
  * ├─ v2.3 -2012.9.11
  * │  └─ 正式加入"管理已抽過數字"功能，詳情請見"LottedList.java"
  * ├─ v2.2 -2012.9.5
@@ -60,6 +65,9 @@ package tw.blogspot.yuan817.random.number;
 import game.rand.num.NumList;
 import game.rand.num.NumRand;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.BreakIterator;
 import java.util.concurrent.ExecutionException;
 
@@ -75,8 +83,10 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,6 +95,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -262,36 +273,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		//"關於"按鈕
 		case R.id.menu_about:
-			//顯示"關於"資訊的對話框
-			AlertDialog about_AlertDialog = new AlertDialog.Builder(this)
-			.create();
-			about_AlertDialog.setTitle(R.string.menu_about);
-			try {
-				/*PackageManager package_manager = this.getPackageManager();
-				PackageInfo package_info = package_manager.getPackageInfo(this.getPackageName(), 0);*/
-				PackageInfo package_info = getPackageManager().getPackageInfo(this.getPackageName(), 0);
-				
-				about_AlertDialog.setMessage(
-						getString(R.string.app_name) + "\n"
-						+ getString(R.string.package_name) + package_info.packageName + "\n"
-						+ getString(R.string.version) + package_info.versionName + "\n"
-						+ getString(R.string.author) + getString(R.string.author_content) + "\n"
-						+ getString(R.string.author_website) + getString(R.string.author_website_content)
-				);
-			} catch (NameNotFoundException ex) {
-				about_AlertDialog.setMessage(getString(R.string.getPackageInfo_error));
-				//e.printStackTrace();
-			} catch(Exception ex){
-				Toast.makeText(this, getString(R.string.inside_process_error), Toast.LENGTH_LONG).show();
-			}
-			about_AlertDialog.setButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			about_AlertDialog.show();
+			showAboutDialog();
 			break;
 		//"離開"按鈕
 		case R.id.menu_exit:
@@ -302,4 +284,84 @@ public class MainActivity extends Activity implements OnClickListener {
 		return super.onMenuItemSelected(featureId, item);
 	}
 	
+	//顯示"關於"資訊的對話框	
+	public void showAboutDialog(){
+		AlertDialog about_AlertDialog = new AlertDialog.Builder(this).create();
+		about_AlertDialog.setTitle(R.string.menu_about);
+		
+		try {
+			/*PackageManager package_manager = this.getPackageManager();
+			PackageInfo package_info = package_manager.getPackageInfo(this.getPackageName(), 0);*/
+			//建立Layout面板
+			LinearLayout about_AlertDialog_content = new LinearLayout(this);
+			PackageInfo package_info = getPackageManager().getPackageInfo(this.getPackageName(), 0);
+			about_AlertDialog_content.setOrientation(LinearLayout.VERTICAL);
+			about_AlertDialog_content.setPadding(getResources().getDimensionPixelSize(R.dimen.padding_large), getResources().getDimensionPixelSize(R.dimen.padding_large), getResources().getDimensionPixelSize(R.dimen.padding_large), getResources().getDimensionPixelSize(R.dimen.padding_large));
+			
+			//前面的關於字串
+			TextView content_textView = new TextView(this);
+			content_textView.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+			content_textView.setAutoLinkMask(Linkify.ALL);
+			content_textView.setText(
+					getString(R.string.app_name) + "\n"
+					+ getString(R.string.package_name) +"\n"+ package_info.packageName + "\n"
+					+ getString(R.string.version) + package_info.versionName + "\n"
+					+ getString(R.string.author) + getString(R.string.author_content) + "\n"
+					+ getString(R.string.author_website) +"\n"+ getString(R.string.author_website_content)
+					);
+			about_AlertDialog_content.addView(content_textView);
+			
+			
+			//讀取文字檔
+			//此code是修改自http://androidbiancheng.blogspot.tw/2011/04/assetmanagerassest.html
+			TextView readme_textView = new TextView(this);
+			readme_textView.setTextAppearance(this, android.R.style.TextAppearance_Small);
+			AssetManager assetManager = getAssets();
+			InputStream inputStream = null;
+			String MyStream;
+			
+			try {
+				inputStream = assetManager.open("README.txt"); // 指定/assets/README.txt
+				ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+				byte[] bytes = new byte[4096];
+				
+				int len;
+				while ((len = inputStream.read(bytes)) > 0){
+					byteArrayOutputStream.write(bytes, 0, len);
+				}
+				
+				MyStream = new String(byteArrayOutputStream.toByteArray(), "UTF8");
+			} catch (IOException e) {
+				e.printStackTrace();
+				MyStream = e.toString();
+			}
+			
+			readme_textView.setText(MyStream);
+			about_AlertDialog_content.addView(readme_textView);
+			
+			//指定這個面板到這個對話框
+			about_AlertDialog.setView(about_AlertDialog_content);
+			
+			/*about_AlertDialog.setMessage(
+					getString(R.string.app_name) + "\n"
+					+ getString(R.string.package_name) + package_info.packageName + "\n"
+					+ getString(R.string.version) + package_info.versionName + "\n"
+					+ getString(R.string.author) + getString(R.string.author_content) + "\n"
+					+ getString(R.string.author_website) + getString(R.string.author_website_content)
+			);*/
+		} catch (NameNotFoundException ex) {
+			about_AlertDialog.setMessage(getString(R.string.getPackageInfo_error));
+			//e.printStackTrace();
+		} catch(Exception ex){
+			Toast.makeText(this, getString(R.string.inside_process_error), Toast.LENGTH_LONG).show();
+		}
+		about_AlertDialog.setButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		about_AlertDialog.show();
+	}
 }
