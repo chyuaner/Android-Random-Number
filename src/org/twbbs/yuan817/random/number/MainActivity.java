@@ -80,6 +80,8 @@ import java.util.concurrent.ExecutionException;
 import org.twbbs.yuan817.random.number.R;
 import android.R.bool;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -111,6 +113,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnClickListener {
 	private Data data = new Data();
+	private boolean isRandoming = false;
 	//建立介面物件
 	private TextView lotted_TextView,lotted_total_TextView;
 	private HorizontalScrollView lotted_scrollView;
@@ -118,11 +121,13 @@ public class MainActivity extends Activity implements OnClickListener {
 	private EditText lot_numMax;
 	private ImageButton lot_numMax_sub,lot_numMax_add;
 	private Button lot_main_button,lotted_clear_Button;
+	private Thread lottingThread;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		isRandoming = false;
 		lot_main_button = (Button)findViewById(R.id.lot_btn);
 		lot_main_button.setOnClickListener(this);
 		lotted_TextView = (TextView)findViewById(R.id.lotted);
@@ -146,7 +151,13 @@ public class MainActivity extends Activity implements OnClickListener {
   	switch(v.getId()){
   	case R.id.lot_btn:
   		//lotting = true;
-  		randoming();
+  		
+  		if(!isRandoming){
+  			randoming();
+  		}
+  		else{
+  			lottingThread.interrupt();
+  		}
   		break;
   	case R.id.clear_lotted:
   		data.numRand.shuffle();
@@ -195,18 +206,8 @@ public class MainActivity extends Activity implements OnClickListener {
 					Integer.parseInt(lot_numMax.getText().toString()), false)
 					&& Integer.parseInt(lot_numMax.getText().toString()) != 0)
 			{
-				
-				//建立抽到的數字變數getNum，並隨機抽取一個數字
-				int getNum = data.numRand.getNumber(
-						Integer.parseInt(lot_numMax.getText().toString()), true);
-				if(getNum != -1){	//若正常抽到數字的話
-					getNum++;
-					data.lottedNum.addNum(getNum);
-					printLottedStatus();	//輸出到介面
-				}
-				else{	//如果數子已經抽完的話
-					Toast.makeText(this, getString(R.string.lotted_exhausted), Toast.LENGTH_LONG).show();
-				}
+				lottingThread = new LottingThread();
+				lottingThread.start();
 			}
 			else	//如果使用者輸入的範圍錯誤的話
 				throw new IllegalArgumentException("range error");
@@ -217,6 +218,64 @@ public class MainActivity extends Activity implements OnClickListener {
 		catch(Exception ex){
 			Toast.makeText(this, getString(R.string.inside_process_error), Toast.LENGTH_LONG).show();
 		}
+	}
+	
+	private Handler updatelotteBtn = new Handler(){
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			//Toast.makeText(getBaseContext(), "XD", Toast.LENGTH_SHORT).show();
+			int getNum = msg.getData().getInt("lotNum", -1);
+			if(getNum != -1){	//若正常抽到數字的話
+				getNum++;
+				lot_main_button.setText( Integer.toString(getNum) );
+			}
+			else{
+				Toast.makeText(getBaseContext(), getString(R.string.lotted_exhausted), Toast.LENGTH_LONG).show();
+			}
+		}
+	};
+	
+	class LottingThread extends Thread{
+		protected int getNum = -1;
+		protected int randMax;
+		@Override
+		public void run() {
+			super.run();
+			try {
+				isRandoming = true;
+				randMax = Integer.parseInt(lot_numMax.getText().toString());
+				while(isRandoming){
+					Thread.sleep(10);
+					getNum = data.numRand.getNumber(randMax, false);
+					
+					Bundle theLotNumBundle = new Bundle();
+					theLotNumBundle.putInt("lotNum", getNum);
+					
+					Message msg = new Message();
+					msg.setData(theLotNumBundle);
+					updatelotteBtn.sendMessage(msg);
+					
+					if(getNum == -1){
+						isRandoming = false;
+						break;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void interrupt() {
+			// TODO Auto-generated method stub
+			super.interrupt();
+			isRandoming = false;
+			
+			data.numRand.setUsedNum(getNum, true);
+			data.lottedNum.addNum(getNum+1);
+			printLottedStatus();	//輸出到介面
+		}
+		
 	}
 	
 	//將主要變數裡的狀態輸出到介面
