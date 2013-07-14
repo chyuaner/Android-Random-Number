@@ -52,7 +52,7 @@
  * JWorld@TW Java論壇 - Re:[請問]動態增加ImageButton與size:
  * 	http://www.javaworld.com.tw/jute/post/view?bid=26&id=239375&sty=3&age=-1&tpg=1&ppg=1#239375
  */
-package tw.blogspot.yuan817.random.number;
+package org.twbbs.yuan817.random.number;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -89,6 +89,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.twbbs.yuan817.random.number.R;
 
 public class LottedList extends Activity implements OnClickListener{
 	private Data data = new Data(); 

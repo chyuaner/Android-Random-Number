@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tw.blogspot.yuan817.random.number"
-    android:versionCode="14"
-    android:versionName="v2.4 beta 1" >
+    package="org.twbbs.yuan817.random.number"
+    android:versionCode="15"
+    android:versionName="v2.5" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="org.twbbs.yuan817.random.number.MainActivity"
             android:label="@string/title_activity_main" 
             android:windowSoftInputMode="stateHidden|adjustResize" android:theme="@style/activity_main_Theme">
             <intent-filter>
@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="LottedList" android:label="@string/title_lotted_list" android:theme="@style/lotted_list_Theme"></activity>
+        <activity android:name="org.twbbs.yuan817.random.number.LottedList" android:label="@string/title_lotted_list" android:theme="@style/lotted_list_Theme"></activity>
     </application>
 
 </manifest>

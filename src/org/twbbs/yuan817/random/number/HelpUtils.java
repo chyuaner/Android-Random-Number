@@ -12,11 +12,12 @@
  * 
  * Description: 所有有關"支援"資訊
  */
-package tw.blogspot.yuan817.random.number;
+package org.twbbs.yuan817.random.number;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import org.twbbs.yuan817.random.number.R;
 
 import android.app.AlertDialog;
 import android.content.Context;

@@ -11,7 +11,7 @@
  *  
  * Description: 專門暫存資料的類別
  */
-package tw.blogspot.yuan817.random.number;
+package org.twbbs.yuan817.random.number;
 
 import game.rand.num.NumList;
 import game.rand.num.NumRand;

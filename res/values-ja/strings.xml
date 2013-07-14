@@ -6,7 +6,6 @@
     <string name="author">作者: </string>
     <string name="author_content">元兒~</string>
     <string name="author_website">ウェブサイト: </string>
-    <string name="author_website_content">http://yuan817.blogspot.tw</string>
     <string name="getPackageInfo_error"> Appの基本的なインフォメーションエーラー</string>
     <string name="menu_toLottedList">抽選した数字を管理する</string>
     <string name="menu_about">あらすじ</string>

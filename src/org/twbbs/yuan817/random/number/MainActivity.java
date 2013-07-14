@@ -66,7 +66,7 @@
  * 
  * Description: 介面上有個大按鈕，按下去將會隨機取出範圍內的數字，且不再重複抽到
  */
-package tw.blogspot.yuan817.random.number;
+package org.twbbs.yuan817.random.number;
 
 import game.rand.num.NumList;
 import game.rand.num.NumRand;
@@ -77,7 +77,7 @@ import java.io.InputStream;
 import java.text.BreakIterator;
 import java.util.concurrent.ExecutionException;
 
-import tw.blogspot.yuan817.random.number.R;
+import org.twbbs.yuan817.random.number.R;
 import android.R.bool;
 import android.os.Bundle;
 import android.app.Activity;
