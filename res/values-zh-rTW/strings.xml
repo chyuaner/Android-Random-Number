@@ -6,6 +6,7 @@
     <string name="author">作者: </string>
     <string name="author_content">元兒~</string>
     <string name="author_website">作者網站: </string>
+    <string name="author_website_content">http://yuan817.twbbs.org</string>
     <string name="getPackageInfo_error">應用程式基本資訊取得錯誤</string>
     <string name="menu_toLottedList">管理已抽過的數字清單</string>
     <string name="menu_about">關於</string>

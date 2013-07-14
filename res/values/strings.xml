@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">Number Ballot</string>
     <string name="package_name">Package: </string>
@@ -6,7 +6,7 @@
     <string name="author">Author: </string>
     <string name="author_content">Yuan~</string>
     <string name="author_website">Author Website: </string>
-    <string name="author_website_content">http://yuan817.twbbs.org</string>
+    <string name="author_website_content" tools:ignore="MissingTranslation">http://yuan817.twbbs.org</string>
     <string name="getPackageInfo_error">GetPackageInfo Error</string>
     <string name="menu_toLottedList">Manager Lotted List</string>
     <string name="menu_about">About</string>
